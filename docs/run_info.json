@@ -1,0 +1,34 @@
+{
+ "H": 71711,
+ "A": 59643,
+ "D": 27503,
+ "possessions": 387,
+ "mean_possession_s": 13.58,
+ "dead_balls": 71,
+ "gmm_weights": [
+  0.13225649277172544,
+  0.867743507228292
+ ],
+ "gmm_speed_ms": [
+  0.5962665414886582,
+  1.5626072883716733
+ ],
+ "oob_hold_frames": 33159,
+ "tag_agreement": 0.733,
+ "tag_strength": 1.009,
+ "tag_median_frames": 564.5,
+ "temperature_scan": {
+  "1": 713.8,
+  "2": 426.6,
+  "3": 328.9,
+  "5": 226.9,
+  "8": 155.5,
+  "12": 119.0,
+  "18": 93.5,
+  "27": 73.9,
+  "40": 59.5
+ },
+ "temperature": 3,
+ "obs_correlation_frames": 43,
+ "sha256": "c668abcc50e939b0"
+}

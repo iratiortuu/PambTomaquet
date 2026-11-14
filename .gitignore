@@ -1,0 +1,24 @@
+# match data is licensed for the competition only -- never commit it
+data/*
+!data/README.md
+*.mp4
+*_atd.txt
+*_atd.xml
+*_homography.csv
+*_smart_tagging.xml
+
+# generated
+cache/
+external/
+*.npz
+evaluation/scoreboard.csv
+evaluation/reports/
+evaluation/results/*
+!evaluation/results/baseline_smooth50.csv
+
+# python
+.venv/
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store

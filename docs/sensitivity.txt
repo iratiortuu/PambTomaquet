@@ -1,18 +1,18 @@
-frozen: possessions 387  mean 13.58s  dead 71
+frozen: possessions 253  mean 20.81s  dead 65
 parameter                            x    poss  mean_s   dead  changed%
-obs_radius_m                       0.8     371   14.16     71      0.49
-obs_radius_m                       1.2     400   13.14     71      0.54
-control_radius_m                   0.8     373   14.09     71      0.27
-control_radius_m                   1.2     396   13.27     71      0.24
-p_nearest_correct                  0.8     206   25.47     72      7.53
-p_nearest_correct                  1.2     725    7.25     71      5.40
-mean_possession_s                  0.8     397   13.22     72      0.55
-mean_possession_s                  1.2     380   13.83     71      0.11
-mean_dead_s                        0.8     387   13.56     72      0.39
-mean_dead_s                        1.2     387   13.58     71      0.00
-dead_share_of_possession_ends      0.8     389   13.51     71      0.04
-dead_share_of_possession_ends      1.2     381   13.77     72      0.48
-restart_ball_speed                 0.8     388   13.73     71      1.15
-restart_ball_speed                 1.2     387   13.51     71      0.38
-duel_margin_m                      0.8     398    13.2     71      0.44
-duel_margin_m                      1.2     378    13.9     71      0.30
+obs_radius_m                       0.8     249   21.14     65      1.23
+obs_radius_m                       1.2     264   19.94     65      0.35
+control_radius_m                   0.8     251   20.97     65      1.04
+control_radius_m                   1.2     264   19.94     65      0.26
+p_nearest_correct                  0.8     162   32.44     67      7.27
+p_nearest_correct                  1.2     434   12.12     66      3.94
+mean_possession_s                  0.8     264   19.94     65      0.17
+mean_possession_s                  1.2     252   20.88     64      0.05
+mean_dead_s                        0.8     253   20.81     65      0.00
+mean_dead_s                        1.2     252   20.88     64      0.05
+dead_share_of_possession_ends      0.8     257   20.47     64      0.11
+dead_share_of_possession_ends      1.2     253   20.81     65      0.00
+restart_ball_speed                 0.8     254   21.01     65      1.18
+restart_ball_speed                 1.2     253   20.71     65      0.38
+duel_margin_m                      0.8     258    20.4     65      0.25
+duel_margin_m                      1.2     249   21.14     65      0.65

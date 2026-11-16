@@ -23,6 +23,7 @@ PYTHONPATH=src .venv/bin/python -m possession.run
 |---|---|
 | `python -m possession.calibrate` | download sample games 1–2 into `external/` and rebuild `config/calibration.yaml` |
 | `python -m possession.run --baseline` | the published smooth50 baseline on our loader (regression check) |
+| `python -m possession.proxy --degrade` | proxy benchmark on the sample games (how design choices were made) |
 | `python scripts/sensitivity.py` | ±20% parameter sweep, no ground truth used |
 | `pytest -q tests` | unit tests plus a two-run determinism check |
 

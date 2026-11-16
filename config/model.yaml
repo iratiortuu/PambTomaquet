@@ -8,8 +8,9 @@ use_tags: true               # Smart Tagging phase prior; strength measured from
 obs_radius_m: 6.2            # cal: p90 distance ball -> possessing team (6.18 m)
 p_nearest_correct: 0.81      # cal: share of alive frames nearest team == possessing team (0.814)
 temperature: null            # null -> chosen per run so the decoded possession rate matches the target
-temperature_grid: [1, 2, 3, 5, 8, 12, 18, 27, 40]
+temperature_grid: [1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5, 6.5, 8, 12, 18]
 target_possessions_per_90min: 314.7   # cal: possessions per 90 min on the sample games
+target_count_ratio: 0.75     # proxy (sample games, degraded): spellF1 peaks at ~75 % of the true count
 
 # --- transitions ---------------------------------------------------------------------
 mean_possession_s: 12.2      # cal: mean possession duration (12.19 s)
@@ -21,3 +22,7 @@ stoppage_floor: 0.05         # p_dead never below 5 %: the mixture posterior is 
 stoppage_ceiling: 0.95
 p_dead_oob: 0.98             # ball seen outside the lines
 restart_ball_speed: 4.0      # m/s; a pass or throw-in clears this, a ball rolling to a stop does not
+
+# --- ball in flight --------------------------------------------------------------------
+flight_speed_ms: 9.0         # proxy: ball faster than 9 m/s (+/-2 frames) is a pass/clearance in flight
+flight_weight: 0.3           # proxy: its nearest-player observation counts 30 %

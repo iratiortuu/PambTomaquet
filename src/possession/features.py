@@ -70,6 +70,7 @@ def build(atd):
         "ball_seen": np.isfinite(ball[:, 0]),
         "d_home": near[:, HOME], "d_away": near[:, AWAY],
         "ball_speed": ball_velocity(ball),
+        "ball_speed_smooth": rolling_mean(ball_velocity(ball), 2),   # +/-2 frames: kills jitter
         "oob": out_of_bounds(ball, atd["pitch"]),
         "med_speed": med_speed,
         "med_speed_2s": rolling_mean(med_speed, 25),

@@ -1,0 +1,9 @@
+game 1  spellF1 0.4524  macroF1 0.7191  poss 247 / gt 341  aliveDeadF1 0.857 teamAcc 0.866 D P/R 0.750/0.601
+game 2  spellF1 0.4557  macroF1 0.6856  poss 248 / gt 326  aliveDeadF1 0.839 teamAcc 0.889 D P/R 0.515/0.625
+MEAN  spellF1 0.4541  macroF1 0.7023
+game 1  spellF1 0.4932  macroF1 0.7399  poss 264 / gt 341  aliveDeadF1 0.855 teamAcc 0.892 D P/R 0.729/0.646
+game 2  spellF1 0.4806  macroF1 0.6784  poss 245 / gt 326  aliveDeadF1 0.828 teamAcc 0.891 D P/R 0.494/0.642
+MEAN  spellF1 0.4869  macroF1 0.7091
+game 1  spellF1 0.3347  macroF1 0.6828  poss 541 / gt 341  aliveDeadF1 0.818 teamAcc 0.850 D P/R 0.633/0.678
+game 2  spellF1 0.3307  macroF1 0.6757  poss 540 / gt 326  aliveDeadF1 0.820 teamAcc 0.874 D P/R 0.492/0.738
+MEAN  spellF1 0.3327  macroF1 0.6793

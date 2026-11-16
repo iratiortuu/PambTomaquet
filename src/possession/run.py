@@ -51,6 +51,11 @@ def observation_weight(F, cfg):
     r0, r1 = cfg["control_radius_m"], cfg["obs_radius_m"]
     w = np.clip((r1 - near) / (r1 - r0), 0, 1)
     w = np.where(far - near < cfg["duel_margin_m"], w * 0.5, w)
+    # A ball in flight (pass, clearance, shot) is not controlled by whoever it flies past.
+    v = cfg.get("flight_speed_ms")
+    if v:
+        fast = np.nan_to_num(F["ball_speed_smooth"], nan=0.0) > v
+        w = np.where(fast, w * cfg["flight_weight"], w)
     return np.where(F["ball_seen"], w, 0.0)
 
 
@@ -65,9 +70,16 @@ def correlation_length(obs, graded):
     return 500
 
 
-def predict(atd, F, cfg):
+def predict(atd, F, cfg, blocks=None, smart_tagging="default"):
+    """blocks: [(half, first, last)] inclusive frame ranges to decode; default = BAR-ATH halves.
+    smart_tagging: DataFrame, None (no tags), or "default" (load BAR-ATH's)."""
     n = len(F["ball_seen"])
-    graded = io.graded_mask(n)
+    if blocks is None:
+        blocks = half_video_blocks(GAME)
+    graded = np.zeros(n, dtype=bool)
+    for _, a, b in blocks:
+        graded[a:b + 1] = True
+    st = io.load_smart_tagging() if isinstance(smart_tagging, str) else smart_tagging
     obs = observation(F, cfg)
     info = {}
     p_dead, dinfo = deadball.p_dead(F, graded, cfg, atd["pitch"])
@@ -76,16 +88,15 @@ def predict(atd, F, cfg):
 
     w = observation_weight(F, cfg)
     prior = None
-    if cfg["use_tags"]:
+    if cfg["use_tags"] and st is not None:
         # Tag reliability measured without labels: how often the tag's side agrees with a clear
         # tracking observation (w = 1) on this match. strength = log-odds of that agreement.
-        unit = tags.team_prior(io.load_smart_tagging(), n, 2.0)[:, 0]   # +1 H, -1 A, 0 none
+        unit = tags.team_prior(st, n, 2.0)[:, 0]   # +1 H, -1 A, 0 none
         both = graded & (unit != 0) & (obs >= 0) & (w >= 1)
         agree = float(np.mean((unit[both] > 0) == (obs[both] == 0)))
         strength = float(np.log(agree / (1 - agree))) if agree > 0.5 else 0.0
         info["tag_agreement"] = round(agree, 3)
         info["tag_strength"] = round(strength, 3)
-        st = io.load_smart_tagging()
         tag_len = float(np.median((st.end - st.start)[st.team_code >= 0]))
         info["tag_median_frames"] = tag_len
         # one tag = `strength` nats in total, spread over its frames; the emissions are later
@@ -96,7 +107,7 @@ def predict(atd, F, cfg):
         pr = None if prior is None else prior * temperature
         log_e = hmm.emissions(obs, p_dead, dict(cfg, temperature=temperature), w, pr)
         labels = np.full(n, "X", dtype="<U1")
-        for _, a, b in half_video_blocks(GAME):
+        for _, a, b in blocks:
             labels[a:b + 1] = LABELS[hmm.viterbi(log_e[a:b + 1], log_T)]
         return labels
 
@@ -105,7 +116,7 @@ def predict(atd, F, cfg):
     else:
         # Self-consistency, no labels: choose the temperature whose decoded possession rate is
         # closest to the rate measured on the sample games (possessions per 90 min of tracking).
-        target = cfg["target_possessions_per_90min"]
+        target = cfg["target_possessions_per_90min"] * cfg.get("target_count_ratio", 1.0)
         minutes = graded.sum() / 25 / 60
         best = None
         for t_try in cfg["temperature_grid"]:
